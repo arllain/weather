@@ -1,17 +1,35 @@
 import React from 'react';
-import { StyleSheet, Text, KeyboardAvoidingView, Platform } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import SearchInput from './components/SearchInput';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+  TextInput,
+  KeyboardAvoidingView,
+  ImageBackground,
+  ActivityIndicator,
+  StatusBar
+  } from 'react-native';  
 
+import SearchInput from './components/SearchInput';
+import getImageForWeather from './utils/getImageForWeather';
 
 export default class App extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-          <Text style={[styles.largeText, styles.textStyle]}>San Francisco</Text>
-          <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
-          <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
-          <SearchInput placeholder="Search any city"/>
+       <ImageBackground 
+          source={getImageForWeather('Clear')} 
+          style={styles.imageContainer}
+          imageStyle={styles.image}
+          >
+          <View style={styles.detailsContainer}>
+            <Text style={[styles.largeText, styles.textStyle]}>San Francisco</Text>
+            <Text style={[styles.smallText, styles.textStyle]}>Light Cloud</Text>
+            <Text style={[styles.largeText, styles.textStyle]}>24°</Text>
+            <SearchInput placeholder="Search any city"/>
+          </View>
+        </ImageBackground>          
       </KeyboardAvoidingView>
     );
   }
@@ -20,19 +38,30 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#34495E"
+  },
+  imageContainer: { flex: 1 },
+  image: { flex: 1, width: null, height: null, resizeMode: "cover" },
+  detailsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.2)",
+    paddingHorizontal: 20
   },
   textStyle: {
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'AvenirNext-Regular' : 'Roboto',
-
+    textAlign: "center",
+    fontFamily: Platform.OS === "ios" ? "AvenirNext-Regular" : "Roboto",
+    color: "white"
   },
-  largeText: {
-    fontSize: 44,
-  },
-  smallText: {
-    fontSize: 18,
-  },
+  largeText: { fontSize: 44 },
+  smallText: { fontSize: 18 },
+  TextInput: {
+    backgroundColor: "#666",
+    color: "white",
+    height: 40,
+    width: 300,
+    marginTop: 20,
+    marginHorizontal: 10,
+    alignSelf: "center"
+  }
 });
